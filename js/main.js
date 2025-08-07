@@ -1,8 +1,6 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize loading screen
-    initLoadingScreen();
-    
+
     // Initialize mobile menu
     initMobileMenu();
     
@@ -19,17 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initBeforeAfterSlider();
 });
 
-// Loading Screen
-function initLoadingScreen() {
-    const loadingScreen = document.getElementById('loadingScreen');
-    
-    // Hide loading screen after all content is loaded
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            loadingScreen.classList.add('hidden');
-        }, 1000);
-    });
-}
 
 // Mobile Menu
 function initMobileMenu() {
