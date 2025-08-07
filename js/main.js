@@ -147,6 +147,47 @@ function initBeforeAfterSlider() {
     const sliderHandle = document.querySelector('.slider-handle');
     
     let isResizing = false;
+    let isAutoSliding = true;
+    let autoSlideDirection = 1; // 1 for right, -1 for left
+    let currentPosition = 50; // Start at middle
+    let autoSlideInterval;
+    
+    // Auto slide animation
+    function startAutoSlide() {
+        if (!autoSlideInterval) {
+            autoSlideInterval = setInterval(() => {
+                if (isAutoSliding) {
+                    // Update position
+                    currentPosition += autoSlideDirection * 0.125; // Speed of animation (medium-slow)
+                    
+                    // Change direction when reaching edges
+                    if (currentPosition >= 100) {
+                        currentPosition = 100;
+                        autoSlideDirection = -1;
+                    } else if (currentPosition <= 0) {
+                        currentPosition = 0;
+                        autoSlideDirection = 1;
+                    }
+                    
+                    // Update slider position
+                    updateSliderPosition(currentPosition);
+                }
+            }, 16); // ~60fps
+        }
+    }
+    
+    function stopAutoSlide() {
+        if (autoSlideInterval) {
+            clearInterval(autoSlideInterval);
+            autoSlideInterval = null;
+        }
+    }
+    
+    function updateSliderPosition(position) {
+        position = Math.max(0, Math.min(100, position));
+        afterImage.style.clipPath = `polygon(${position}% 0, 100% 0, 100% 100%, ${position}% 100%)`;
+        sliderHandle.style.left = `${position}%`;
+    }
     
     // Handle mouse/touch events
     slider.addEventListener('mousedown', startSliding);
@@ -154,6 +195,7 @@ function initBeforeAfterSlider() {
     
     function startSliding(e) {
         isResizing = true;
+        isAutoSliding = false; // Stop auto sliding when user interacts
         slider.classList.add('active');
         
         // Add event listeners for drag and end
@@ -172,19 +214,20 @@ function initBeforeAfterSlider() {
         // Calculate position
         let x = e.type === 'mousemove' ? e.pageX : e.touches[0].pageX;
         x = x - sliderRect.left;
-        let position = (x / sliderRect.width) * 100;
-        
-        // Constrain position between 0% and 100%
-        position = Math.max(0, Math.min(100, position));
+        currentPosition = (x / sliderRect.width) * 100;
         
         // Update slider position
-        afterImage.style.clipPath = `polygon(${position}% 0, 100% 0, 100% 100%, ${position}% 100%)`;
-        sliderHandle.style.left = `${position}%`;
+        updateSliderPosition(currentPosition);
     }
     
     function stopSliding() {
         isResizing = false;
         slider.classList.remove('active');
+        
+        // Wait a bit before resuming auto slide
+        setTimeout(() => {
+            isAutoSliding = true;
+        }, 2000);
         
         // Remove event listeners
         document.removeEventListener('mousemove', slide);
@@ -192,6 +235,23 @@ function initBeforeAfterSlider() {
         document.removeEventListener('mouseup', stopSliding);
         document.removeEventListener('touchend', stopSliding);
     }
+    
+    // Start auto sliding
+    startAutoSlide();
+    
+    // Pause auto sliding when user hovers over the slider
+    slider.addEventListener('mouseenter', () => {
+        isAutoSliding = false;
+    });
+    
+    // Resume auto sliding when user leaves the slider
+    slider.addEventListener('mouseleave', () => {
+        if (!isResizing) {
+            setTimeout(() => {
+                isAutoSliding = true;
+            }, 1000);
+        }
+    });
 }
 
 // Helper function to check if element is in viewport
