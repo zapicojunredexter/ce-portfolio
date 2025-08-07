@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize contact form
     initContactForm();
+
+    // Initialize before/after slider
+    initBeforeAfterSlider();
 });
 
 // Loading Screen
@@ -164,6 +167,60 @@ function initContactForm() {
             // Reset form
             form.reset();
         });
+    }
+}
+
+// Before/After Slider
+function initBeforeAfterSlider() {
+    const slider = document.querySelector('.before-after-slider');
+    const afterImage = document.querySelector('.after-image');
+    const sliderHandle = document.querySelector('.slider-handle');
+    
+    let isResizing = false;
+    
+    // Handle mouse/touch events
+    slider.addEventListener('mousedown', startSliding);
+    slider.addEventListener('touchstart', startSliding);
+    
+    function startSliding(e) {
+        isResizing = true;
+        slider.classList.add('active');
+        
+        // Add event listeners for drag and end
+        document.addEventListener('mousemove', slide);
+        document.addEventListener('touchmove', slide);
+        document.addEventListener('mouseup', stopSliding);
+        document.addEventListener('touchend', stopSliding);
+    }
+    
+    function slide(e) {
+        if (!isResizing) return;
+        
+        // Get slider dimensions
+        const sliderRect = slider.getBoundingClientRect();
+        
+        // Calculate position
+        let x = e.type === 'mousemove' ? e.pageX : e.touches[0].pageX;
+        x = x - sliderRect.left;
+        let position = (x / sliderRect.width) * 100;
+        
+        // Constrain position between 0% and 100%
+        position = Math.max(0, Math.min(100, position));
+        
+        // Update slider position
+        afterImage.style.clipPath = `polygon(${position}% 0, 100% 0, 100% 100%, ${position}% 100%)`;
+        sliderHandle.style.left = `${position}%`;
+    }
+    
+    function stopSliding() {
+        isResizing = false;
+        slider.classList.remove('active');
+        
+        // Remove event listeners
+        document.removeEventListener('mousemove', slide);
+        document.removeEventListener('touchmove', slide);
+        document.removeEventListener('mouseup', stopSliding);
+        document.removeEventListener('touchend', stopSliding);
     }
 }
 
