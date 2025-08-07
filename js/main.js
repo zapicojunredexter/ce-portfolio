@@ -96,41 +96,43 @@ function initSmoothScroll() {
 
 // Animations
 function initAnimations() {
-    // Intersection Observer for fade-in animations
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                entry.target.classList.add('animate-in');
+                entry.target.classList.add('fade-in');
             }
         });
     }, {
-        threshold: 0.1
+        threshold: 0.2,
+        rootMargin: '0px 0px -100px 0px'
     });
     
-    // Observe all sections
+    // Animate sections
     document.querySelectorAll('section').forEach(section => {
+        section.classList.add('animate-on-scroll');
         observer.observe(section);
-        section.classList.add('fade-in');
     });
-    
-    // Add animation classes
-    const fadeIn = `
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-        
-        .animate-in {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    `;
-    
-    // Add animation styles
-    const style = document.createElement('style');
-    style.textContent = fadeIn;
-    document.head.appendChild(style);
+
+    // Animate project cards with delay
+    document.querySelectorAll('.project-card').forEach((card, index) => {
+        card.classList.add('animate-on-scroll');
+        card.style.animationDelay = `${index * 0.2}s`;
+        observer.observe(card);
+    });
+
+    // Animate skills with delay
+    document.querySelectorAll('.skills-list li').forEach((skill, index) => {
+        skill.classList.add('animate-on-scroll', 'scale-in');
+        skill.style.animationDelay = `${index * 0.1}s`;
+        observer.observe(skill);
+    });
+
+    // Animate timeline items
+    document.querySelectorAll('.timeline-item').forEach((item, index) => {
+        item.classList.add('animate-on-scroll');
+        item.style.animationDelay = `${index * 0.3}s`;
+        observer.observe(item);
+    });
 }
 
 // Contact Form

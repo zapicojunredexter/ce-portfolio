@@ -1,14 +1,57 @@
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.animate-on-scroll {
+    opacity: 0;
+}
+
+.animate-on-scroll.fade-in {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+.animate-on-scroll.scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+}
+
 /* Base Styles and CSS Reset */
 :root {
     /* Color Palette */
     --color-primary: #2C5282;     /* Deep Blue - represents trust and professionalism */
+    --color-primary-dark: #1A365D; /* Darker blue for depth */
+    --color-primary-light: #4299E1; /* Lighter blue for accents */
     --color-secondary: #4A5568;   /* Slate Gray - for secondary elements */
-    --color-accent: #F6AD55;      /* Warm Orange - for emphasis and calls-to-action */
-    --color-text: #2D3748;        /* Dark Gray - main text color */
+    --color-accent: #ED8936;      /* Warmer Orange - for emphasis and calls-to-action */
+    --color-accent-light: #F6AD55; /* Light orange for hover states */
+    --color-text: #1A202C;        /* Darker Gray - main text color for better contrast */
     --color-text-light: #718096;  /* Light Gray - secondary text */
     --color-background: #FFFFFF;   /* White - main background */
     --color-background-alt: #F7FAFC; /* Light Gray - alternative background */
+    --color-background-dark: #EDF2F7; /* Darker alt background for depth */
     --color-border: #E2E8F0;      /* Light Gray - borders */
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-light) 100%);
+    --gradient-accent: linear-gradient(135deg, var(--color-accent) 0%, var(--color-accent-light) 100%);
 
     /* Typography */
     --font-primary: 'Space Grotesk', sans-serif;  /* Modern, technical feel */
@@ -145,8 +188,8 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     height: 100%;
     background: linear-gradient(135deg, 
-        rgba(44, 82, 130, 0.05) 0%,
-        rgba(247, 250, 252, 0.05) 100%);
+        rgba(44, 82, 130, 0.08) 0%,
+        rgba(66, 153, 225, 0.05) 100%);
     z-index: 1;
 }
 
@@ -372,14 +415,44 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .btn-primary {
-    background-color: var(--color-primary);
+    background: var(--gradient-primary);
     color: white;
+    border: none;
+    position: relative;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--gradient-accent);
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.btn-primary:hover::before {
+    opacity: 1;
 }
 
 .btn-secondary {
     background-color: transparent;
     color: var(--color-primary);
     border: 2px solid var(--color-primary);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background-color: var(--color-primary-dark);
+    border-color: var(--color-primary-dark);
+    color: white;
 }
 
 .btn-primary:hover, .btn-secondary:hover {
@@ -436,9 +509,19 @@ h1, h2, h3, h4, h5, h6 {
 
 .skills-list li {
     padding: var(--spacing-sm) var(--spacing-md);
-    background-color: var(--color-background-alt);
+    background-color: var(--color-background-dark);
     border-radius: 4px;
     font-weight: 500;
+    transition: all 0.3s ease;
+    border: 1px solid var(--color-border);
+}
+
+.skills-list li:hover {
+    background: var(--gradient-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 82, 130, 0.2);
+    border-color: transparent;
 }
 
 /* Experience Section */
@@ -485,6 +568,14 @@ h1, h2, h3, h4, h5, h6 {
     padding: var(--spacing-lg);
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid var(--color-primary-light);
+    transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+    transform: translateX(8px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-left-color: var(--color-accent);
 }
 
 .timeline-content .date {
@@ -536,11 +627,33 @@ h1, h2, h3, h4, h5, h6 {
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    transition: transform 0.3s ease;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    position: relative;
+}
+
+.project-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .project-card:hover {
-    transform: translateY(-4px);
+    transform: translateY(-8px);
+}
+
+.project-card:hover::after {
+    opacity: 1;
+}
+
+.project-card:hover .project-content h3 {
+    color: var(--color-accent);
 }
 
 .project-image {
