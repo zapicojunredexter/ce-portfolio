@@ -21,8 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // Mobile Menu
 function initMobileMenu() {
     const menuToggle = document.querySelector('.mobile-menu-toggle');
-    const navLinks = document.querySelector('.nav-links');
     const header = document.querySelector('.header');
+    const navLinks = document.querySelector('.nav-links');
     
     let isMenuOpen = false;
     
@@ -30,47 +30,28 @@ function initMobileMenu() {
         isMenuOpen = !isMenuOpen;
         
         // Toggle menu visibility
-        navLinks.style.display = isMenuOpen ? 'flex' : 'none';
-        
-        // Animate hamburger icon
-        const spans = menuToggle.querySelectorAll('span');
-        spans.forEach((span, index) => {
-            if (isMenuOpen) {
-                if (index === 0) span.style.transform = 'rotate(45deg) translate(5px, 5px)';
-                if (index === 1) span.style.opacity = '0';
-                if (index === 2) span.style.transform = 'rotate(-45deg) translate(7px, -7px)';
-            } else {
-                span.style.transform = 'none';
-                span.style.opacity = '1';
-            }
-        });
-        
-        // Adjust header for mobile menu
-        if (isMenuOpen) {
-            navLinks.style.position = 'absolute';
-            navLinks.style.top = '80px';
-            navLinks.style.left = '0';
-            navLinks.style.width = '100%';
-            navLinks.style.backgroundColor = 'var(--color-background)';
-            navLinks.style.padding = '1rem';
-            navLinks.style.flexDirection = 'column';
-            navLinks.style.alignItems = 'center';
-            navLinks.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.1)';
-        }
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', (e) => {
-        if (isMenuOpen && !e.target.closest('.nav-container')) {
-            menuToggle.click();
-        }
+        header.classList.toggle('mobile-open');
+        menuToggle.classList.toggle('active');
     });
     
     // Close menu when clicking a link
     navLinks.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', () => {
-            if (isMenuOpen) menuToggle.click();
+            if (isMenuOpen) {
+                isMenuOpen = false;
+                header.classList.remove('mobile-open');
+                menuToggle.classList.remove('active');
+            }
         });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+        if (isMenuOpen && !e.target.closest('.header') && !e.target.closest('.mobile-menu-toggle')) {
+            isMenuOpen = false;
+            header.classList.remove('mobile-open');
+            menuToggle.classList.remove('active');
+        }
     });
 }
 
