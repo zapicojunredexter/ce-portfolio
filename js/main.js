@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize before/after slider
     initBeforeAfterSlider();
+
+    // Initialize masonry gallery
+    initMasonryGallery();
 });
 
 
@@ -266,6 +269,99 @@ function isInViewport(element) {
 }
 
 // Add scroll-based header styling
+// Masonry Gallery
+function initMasonryGallery() {
+    const masonryGrid = document.querySelector('.masonry-grid');
+    const modal = document.getElementById('imageModal');
+    const modalImg = document.getElementById('modalImage');
+    const closeBtn = document.querySelector('.modal-close');
+    const prevBtn = document.querySelector('.modal-nav.prev');
+    const nextBtn = document.querySelector('.modal-nav.next');
+    
+    let currentImageIndex = 0;
+    const images = [];
+    
+    // Generate array of image paths
+    for (let i = 1; i <= 19; i++) {
+        images.push(`image${i}.png`);
+    }
+    images.push('image.png'); // Add the last image
+    
+    // Create and append image elements
+    images.forEach((image, index) => {
+        const item = document.createElement('div');
+        item.className = 'masonry-item';
+        
+        const img = document.createElement('img');
+        img.src = `media/images/masonry/${image}`;
+        img.alt = `Construction Project ${index + 1}`;
+        img.loading = 'lazy';
+        
+        // Add click event for modal
+        item.addEventListener('click', () => {
+            openModal(index);
+        });
+        
+        item.appendChild(img);
+        masonryGrid.appendChild(item);
+    });
+    
+    // Modal functions
+    function openModal(index) {
+        currentImageIndex = index;
+        modalImg.src = `media/images/masonry/${images[index]}`;
+        modalImg.alt = `Construction Project ${index + 1}`;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+    }
+    
+    function closeModal() {
+        modal.classList.remove('active');
+        document.body.style.overflow = ''; // Restore scrolling
+    }
+    
+    function showPrevImage() {
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        modalImg.src = `media/images/masonry/${images[currentImageIndex]}`;
+        modalImg.alt = `Construction Project ${currentImageIndex + 1}`;
+    }
+    
+    function showNextImage() {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        modalImg.src = `media/images/masonry/${images[currentImageIndex]}`;
+        modalImg.alt = `Construction Project ${currentImageIndex + 1}`;
+    }
+    
+    // Event listeners
+    closeBtn.addEventListener('click', closeModal);
+    prevBtn.addEventListener('click', showPrevImage);
+    nextBtn.addEventListener('click', showNextImage);
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+    
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (!modal.classList.contains('active')) return;
+        
+        switch (e.key) {
+            case 'Escape':
+                closeModal();
+                break;
+            case 'ArrowLeft':
+                showPrevImage();
+                break;
+            case 'ArrowRight':
+                showNextImage();
+                break;
+        }
+    });
+}
+
 window.addEventListener('scroll', () => {
     const header = document.querySelector('.header');
     if (window.scrollY > 50) {
