@@ -142,6 +142,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     height: 100%;
     gap: var(--spacing-xl);
+    justify-content: space-between;
 }
 
 .logo-text {
@@ -201,6 +202,52 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-links a:hover::before {
     width: 15px;
+}
+
+.nav-links a.active {
+    color: var(--color-primary);
+    transform: translateX(10px);
+}
+
+.nav-links a.active::before {
+    width: 15px;
+}
+
+/* Social Links */
+.social-links {
+    margin-top: auto;
+    display: flex;
+    gap: var(--spacing-md);
+    justify-content: center;
+    padding-top: var(--spacing-lg);
+    border-top: 1px solid var(--color-border);
+}
+
+.social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--color-background-alt);
+    color: var(--color-text-light);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid var(--color-border);
+}
+
+.social-link:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(44, 82, 130, 0.2);
+    border-color: var(--color-primary);
+}
+
+.social-link svg {
+    width: 20px;
+    height: 20px;
 }
 
 .mobile-menu-toggle {
@@ -781,10 +828,23 @@ h1, h2, h3, h4, h5, h6 {
     bottom: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
     z-index: 9999;
     opacity: 0;
     transition: opacity 0.3s ease;
+}
+
+.modal-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    cursor: pointer;
+    z-index: 1;
+    pointer-events: auto;
 }
 
 .image-modal.active {
@@ -802,6 +862,9 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    cursor: default;
+    z-index: 2;
+    pointer-events: none;
 }
 
 .modal-content img {
@@ -812,6 +875,7 @@ h1, h2, h3, h4, h5, h6 {
     object-fit: contain;
     border-radius: 4px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    pointer-events: auto;
 }
 
 .modal-close {
@@ -833,6 +897,7 @@ h1, h2, h3, h4, h5, h6 {
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
     z-index: 10000;
+    pointer-events: auto;
 }
 
 .modal-close:hover {
@@ -859,6 +924,7 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center;
     backdrop-filter: blur(10px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    pointer-events: auto;
 }
 
 .modal-nav.prev {
@@ -1199,6 +1265,11 @@ main {
 
     .nav-container {
         gap: var(--spacing-lg);
+    }
+    
+    .social-links {
+        margin-top: var(--spacing-lg);
+        padding-top: var(--spacing-md);
     }
 
     .mobile-menu-toggle {

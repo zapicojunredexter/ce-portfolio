@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize masonry gallery
     initMasonryGallery();
+    
+    // Initialize sidebar context awareness
+    initSidebarContext();
 });
 
 
@@ -65,7 +68,7 @@ function initSmoothScroll() {
             e.preventDefault();
             const target = document.querySelector(this.getAttribute('href'));
             if (target) {
-                const headerOffset = 80;
+                const headerOffset = 0; // Remove offset to fix spacing issue
                 const elementPosition = target.getBoundingClientRect().top;
                 const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
@@ -337,12 +340,24 @@ function initMasonryGallery() {
     prevBtn.addEventListener('click', showPrevImage);
     nextBtn.addEventListener('click', showNextImage);
     
-    // Close modal when clicking outside
+    // Close modal when clicking anywhere outside the image
     modal.addEventListener('click', (e) => {
-        if (e.target === modal) {
+        console.log('Modal clicked, target:', e.target);
+        // Close if clicking on the modal itself or backdrop, but not on content
+        if (e.target === modal || e.target.classList.contains('modal-backdrop')) {
+            console.log('Closing modal via backdrop click');
             closeModal();
         }
     });
+    
+    // Prevent clicks on modal content from closing the modal
+    const modalContent = document.querySelector('.modal-content');
+    if (modalContent) {
+        modalContent.addEventListener('click', (e) => {
+            console.log('Modal content clicked, preventing close');
+            e.stopPropagation();
+        });
+    }
     
     // Keyboard navigation
     document.addEventListener('keydown', (e) => {
@@ -359,6 +374,55 @@ function initMasonryGallery() {
                 showNextImage();
                 break;
         }
+    });
+}
+
+// Sidebar Context Awareness
+function initSidebarContext() {
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const sections = document.querySelectorAll('section[id]');
+    
+    // Remove active class from all links
+    function clearActiveLinks() {
+        navLinks.forEach(link => link.classList.remove('active'));
+    }
+    
+    // Add active class to current section link
+    function setActiveLink(sectionId) {
+        clearActiveLinks();
+        const activeLink = document.querySelector(`.nav-links a[href="#${sectionId}"]`);
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    }
+    
+    // Check which section is in view
+    function updateActiveSection() {
+        const scrollPosition = window.scrollY + 50; // Reduced offset for better detection
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.offsetHeight;
+            const sectionId = section.getAttribute('id');
+            
+            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
+                setActiveLink(sectionId);
+            }
+        });
+    }
+    
+    // Initial check
+    updateActiveSection();
+    
+    // Update on scroll
+    window.addEventListener('scroll', updateActiveSection);
+    
+    // Update on click
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            const targetId = link.getAttribute('href').substring(1);
+            setActiveLink(targetId);
+        });
     });
 }
 
