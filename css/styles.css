@@ -360,6 +360,12 @@ h1, h2, h3, h4, h5, h6 {
     margin-top: var(--spacing-xs);
 }
 
+.stat-icon {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-sm);
+    display: block;
+}
+
 .hero-visual {
     position: relative;
     height: 100%;
@@ -658,6 +664,67 @@ h1, h2, h3, h4, h5, h6 {
     border-color: transparent;
 }
 
+/* Skills Progress */
+.skills-progress {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+.skill-item {
+    margin-bottom: var(--spacing-sm);
+}
+
+.skill-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-xs);
+}
+
+.skill-name {
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.skill-percentage {
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 0.9rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--color-background-dark);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--gradient-primary);
+    border-radius: 4px;
+    transition: width 1s ease-in-out;
+    position: relative;
+}
+
+.progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+}
+
 /* Technical Specifications Section */
 .specifications {
     padding: calc(var(--spacing-xl) * 2) 0;
@@ -713,6 +780,117 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
 }
 
+/* Pie Chart Styles */
+.chart-container {
+    grid-column: span 2;
+}
+
+.pie-chart-wrapper {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xl);
+    margin-top: var(--spacing-lg);
+}
+
+.pie-chart {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    border-radius: 50%;
+    background: conic-gradient(
+        var(--color-primary) 0deg 144deg,      /* Infrastructure 40% = 144deg */
+        var(--color-accent) 144deg 270deg,     /* Commercial 35% = 126deg */
+        var(--color-primary-light) 270deg 360deg /* Residential 25% = 90deg */
+    );
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.pie-chart:hover {
+    transform: scale(1.05);
+}
+
+.pie-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.total-label {
+    font-size: 0.7rem;
+    color: var(--color-text-light);
+    font-weight: 500;
+}
+
+.total-value {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.chart-legend {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-sm);
+    flex: 1;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-xs);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.legend-item:hover {
+    background: var(--color-background-alt);
+    transform: translateX(5px);
+}
+
+.legend-color {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    flex-shrink: 0;
+}
+
+.legend-color.infrastructure {
+    background: var(--color-primary);
+}
+
+.legend-color.commercial {
+    background: var(--color-accent);
+}
+
+.legend-color.residential {
+    background: var(--color-primary-light);
+}
+
+.legend-text {
+    font-size: 0.9rem;
+    color: var(--color-text);
+    font-weight: 500;
+    flex: 1;
+}
+
+.legend-value {
+    font-size: 0.9rem;
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
 /* Experience Section */
 .experience {
     padding: calc(var(--spacing-xl) * 2) 0;
@@ -742,6 +920,23 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: var(--spacing-xl);
     padding-left: var(--spacing-xl);
     position: relative;
+}
+
+.timeline-icon {
+    position: absolute;
+    left: -30px;
+    top: 0;
+    font-size: 1.5rem;
+    background: var(--color-background);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border: 3px solid var(--color-primary);
+    z-index: 2;
 }
 
 .timeline-item::before {
@@ -1495,6 +1690,44 @@ main {
     .certs-grid {
         grid-template-columns: 1fr;
         gap: var(--spacing-md);
+    }
+    
+    .chart-container {
+        grid-column: span 1;
+    }
+    
+    .pie-chart-wrapper {
+        flex-direction: column;
+        gap: var(--spacing-md);
+    }
+    
+    .pie-chart {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .pie-center {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .total-label {
+        font-size: 0.6rem;
+    }
+    
+    .total-value {
+        font-size: 0.8rem;
+    }
+    
+    .timeline-item {
+        padding-left: var(--spacing-lg);
+    }
+    
+    .timeline-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        left: -20px;
     }
 
     .experience-badge {
