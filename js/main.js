@@ -437,26 +437,14 @@ function initSidebarContext() {
 
 /* Removed scroll-based header background change - keeping blue background */
 
-// Video Parallax Effect
+// Video Background - Fixed position (no scroll parallax)
 function initVideoParallax() {
     const videoBackground = document.querySelector('.hero-video-background video');
     
     if (!videoBackground) return;
     
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        const rate = scrolled * -0.5; // Parallax speed (negative for opposite direction)
-        
-        // Apply parallax effect to video
-        videoBackground.style.transform = `translateY(${rate}px) scale(1.1)`;
-    });
-    
-    // Reset position when at top
-    window.addEventListener('scroll', () => {
-        if (window.pageYOffset === 0) {
-            videoBackground.style.transform = 'translateY(0) scale(1.1)';
-        }
-    });
+    // Set fixed position - no scroll movement
+    videoBackground.style.transform = 'scale(1.1)';
 }
 
 /* Removed duplicate function - using the correct one above */

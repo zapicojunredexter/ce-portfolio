@@ -99,6 +99,7 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: var(--spacing-lg);
     position: relative;
     padding-bottom: var(--spacing-sm);
+    text-align: center;
 }
 
 .section-title::after {
@@ -293,19 +294,18 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Hero Section */
 .hero {
-    padding: calc(var(--spacing-xl)) 0 calc(var(--spacing-xl) * 2) 0;
+    padding: 80px 0 var(--spacing-xl) 0;
     background-color: var(--color-background-alt);
     min-height: 100vh;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     position: relative;
-    overflow: hidden;
-    padding-top: 120px;
+    overflow: visible;
 }
 
 /* Video Background */
 .hero-video-background {
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -321,7 +321,7 @@ h1, h2, h3, h4, h5, h6 {
     position: absolute;
     top: 0;
     left: 0;
-    transform: scale(1.1); /* Slightly larger to allow for parallax movement */
+    transform: scale(1.1);
 }
 
 .video-overlay {
@@ -378,14 +378,15 @@ h1, h2, h3, h4, h5, h6 {
 .hero-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: calc(var(--spacing-xl) * 2);
+    gap: var(--spacing-xl);
     max-width: var(--container-width);
     margin: 0 auto;
     width: 100%;
     position: relative;
     z-index: 3;
     align-items: center;
-    min-height: calc(100vh - 120px);
+    justify-items: center;
+    padding: 0 var(--spacing-lg);
 }
 
 .hero-content-left {
@@ -393,6 +394,8 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     z-index: 3;
     animation: slideInLeft 0.8s ease-out;
+    justify-self: start;
+    max-width: 600px;
 }
 
 @keyframes slideInLeft {
@@ -444,8 +447,13 @@ h1, h2, h3, h4, h5, h6 {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--spacing-lg);
+    justify-content: center;
+    gap: var(--spacing-md);
     animation: slideInRight 0.8s ease-out 0.2s both;
+    justify-self: center;
+    width: 100%;
+    max-width: 300px;
+    height: 100%;
 }
 
 @keyframes slideInRight {
@@ -459,67 +467,11 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-/* Project Showcase Grid */
-.project-showcase {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    gap: var(--spacing-md);
-    width: 100%;
-    max-width: 500px;
-    aspect-ratio: 1;
-}
-
-.showcase-item {
-    position: relative;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s ease;
-}
-
-.showcase-item:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-}
-
-.showcase-item img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.showcase-item:hover img {
-    transform: scale(1.05);
-}
-
-.showcase-main {
-    grid-column: span 1;
-    grid-row: span 1;
-}
-
-.showcase-secondary {
-    grid-column: span 1;
-    grid-row: span 1;
-}
-
-.showcase-overlay {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
-    padding: var(--spacing-md);
-    color: white;
-    font-weight: 600;
-    font-size: 0.9rem;
-    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
-}
+/* Project Showcase Grid - Removed to make hero section more compact */
 
 .hero-title {
-    font-size: 4rem;
-    margin-bottom: var(--spacing-md);
+    font-size: 3.2rem;
+    margin-bottom: var(--spacing-sm);
     color: #ffffff;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
     font-weight: 700;
@@ -532,13 +484,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .hero-description {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     color: #ffffff;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
     max-width: 600px;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
     font-weight: 500;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 .hero-cta {
@@ -546,7 +498,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: var(--spacing-md);
     justify-content: flex-start;
     flex-wrap: wrap;
-    margin-bottom: var(--spacing-lg);
+    margin-bottom: var(--spacing-md);
 }
 
 .btn-icon {
@@ -562,10 +514,10 @@ h1, h2, h3, h4, h5, h6 {
 .hero-stats {
     display: flex;
     gap: var(--spacing-md);
-    justify-content: flex-start;
-    margin-top: var(--spacing-lg);
+    justify-content: center;
+    margin-top: var(--spacing-md);
     width: 100%;
-    max-width: 500px;
+    max-width: 600px;
 }
 
 .stat-item {
@@ -970,6 +922,7 @@ h1, h2, h3, h4, h5, h6 {
     box-shadow: 0 12px 32px rgba(237, 137, 54, 0.4);
     z-index: 2;
     animation: pulse 2s ease-in-out infinite;
+    margin: var(--spacing-lg);
 }
 
 .badge-content {
@@ -2306,18 +2259,32 @@ main {
     }
 }
 
+@media (max-width: 768px) {
     .hero {
-        padding: var(--spacing-lg) 0;
-    }
-
-    .hero {
-        padding-top: 100px;
+        padding: 60px 0 var(--spacing-lg) 0;
+        min-height: 100vh;
     }
     
     .hero-container {
         grid-template-columns: 1fr;
         text-align: center;
-        padding: 0 var(--container-padding);
+        padding: 0 var(--spacing-md);
+        gap: var(--spacing-lg);
+    }
+
+    .hero-content-left {
+        justify-self: center;
+        text-align: center;
+        max-width: 100%;
+    }
+
+    .hero-content-right {
+        justify-self: center;
+        max-width: 350px;
+    }
+
+    .hero-title {
+        font-size: 2.5rem;
     }
 
     .hero-description {
@@ -2331,6 +2298,7 @@ main {
     
     .hero-stats {
         gap: var(--spacing-md);
+        justify-content: center;
     }
     
     .stat-item {
