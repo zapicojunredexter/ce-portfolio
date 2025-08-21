@@ -24,6 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Initialize video parallax effect
     initVideoParallax();
+    
+    // Initialize before/after slider
+    initBeforeAfterSlider();
 });
 
 
@@ -245,6 +248,9 @@ function initBeforeAfterSlider() {
         document.removeEventListener('touchend', stopSliding);
     }
     
+    // Set initial position
+    updateSliderPosition(currentPosition);
+    
     // Start auto sliding
     startAutoSlide();
     
@@ -461,3 +467,5 @@ function initVideoParallax() {
         }
     });
 }
+
+/* Removed duplicate function - using the correct one above */
