@@ -1085,6 +1085,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: var(--spacing-xl);
     align-items: start;
     max-width: 100%;
+    padding: 0 var(--spacing-lg);
 }
 
 .about-image {
@@ -1217,6 +1218,7 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 1000px;
     margin: 0 auto;
     width: 100%;
+    padding: 0 var(--spacing-lg);
 }
 
 .spec-category {
@@ -1385,6 +1387,7 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     max-width: 800px;
     margin: 0 auto;
+    padding: 0 var(--spacing-lg);
 }
 
 .timeline::before {
@@ -1813,6 +1816,7 @@ h1, h2, h3, h4, h5, h6 {
     max-width: 1000px;
     margin: 0 auto;
     width: 100%;
+    padding: 0 var(--spacing-lg);
 }
 
 .cert-card {
@@ -1869,6 +1873,7 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
     gap: var(--spacing-lg);
     max-width: 100%;
+    padding: 0 var(--spacing-lg);
 }
 
 .project-card {
@@ -1996,6 +2001,7 @@ h1, h2, h3, h4, h5, h6 {
     grid-template-columns: 1fr 1fr;
     gap: var(--spacing-xl);
     align-items: start;
+    padding: 0 var(--spacing-lg);
 }
 
 .contact-info h3 {
@@ -2369,6 +2375,19 @@ main {
     .container {
         padding: 0 var(--spacing-md);
     }
+    
+    /* Adjust section content padding on mobile */
+    .about-grid,
+    .specs-grid,
+    .certs-grid,
+    .projects-grid,
+    .contact-grid {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .timeline {
+        padding: 0 var(--spacing-md);
+    }
 }
 
 @media (max-width: 480px) {
@@ -2397,6 +2416,19 @@ main {
     }
 
     .container {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    /* Adjust section content padding on small mobile */
+    .about-grid,
+    .specs-grid,
+    .certs-grid,
+    .projects-grid,
+    .contact-grid {
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .timeline {
         padding: 0 var(--spacing-sm);
     }
 }
