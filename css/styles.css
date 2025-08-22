@@ -193,7 +193,7 @@ h1, h2, h3, h4, h5, h6 {
     top: 50%;
     width: 0;
     height: 2px;
-    background: rgba(255, 255, 255, 0.8);
+    background: var(--color-accent);
     transition: width 0.3s ease;
     transform: translateY(-50%);
 }
